@@ -23,9 +23,9 @@ function App() {
   };
 
   return (
-    <main>
+    <main className="app">
       <h2>Todo App</h2>
-      <form onSubmit={addTodo}>
+      <form className="input-row" onSubmit={addTodo}>
         <input
           type="text"
           value={input}
@@ -34,9 +34,9 @@ function App() {
         />{" "}
         <button type="submit">Add</button>
       </form>
-      <ul>
+      <ul className="todo-list">
         {todos.map((todo) => (
-          <li key={todo.id}>
+          <li className="todo" key={todo.id}>
             <span
               onClick={() => toggleTodos(todo.id)}
               style={{
