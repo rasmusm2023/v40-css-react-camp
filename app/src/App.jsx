@@ -2,20 +2,24 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([
+    { id: 1, text: "Laga mat", done: false },
+    { id: 2, text: "Dammsuga lägenheten", done: true },
+    { id: 3, text: "Koda", done: false },
+    { id: 4, text: "Dricka energidryck", done: false },
+    { id: 5, text: "Spela wow", done: false },
+  ]);
   const [input, setInput] = useState("");
 
   const addTodo = (e) => {
     e.preventDefault(); // Fixed: actually invoke preventDefault()
     if (!input.trim()) return;
-    setTodos([...todos, { id: Date.now(), text: input, completed: false }]);
+    setTodos([...todos, { id: Date.now(), text: input, done: false }]);
     setInput("");
   };
 
   const toggleTodos = (id) => {
-    setTodos(
-      todos.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)),
-    );
+    setTodos(todos.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
   };
 
   const deleteTodo = (id) => {
@@ -35,18 +39,10 @@ function App() {
         <button type="submit">Add</button>
       </form>
       <ul className="todo-list">
-        {todos.map((todo) => (
-          <li className="todo" key={todo.id}>
-            <span
-              onClick={() => toggleTodos(todo.id)}
-              style={{
-                textDecoration: todo.completed ? "line-through" : "none",
-                cursor: "pointer",
-              }}
-            >
-              {todo.text}
-            </span>
-            <button onClick={() => deleteTodo(todo.id)}>❌</button>
+        {todos.map((t) => (
+          <li key={t.id} className={t.done ? "todo completed" : "todo"}>
+            <span onClick={() => toggleTodos(t.id)}>{t.text}</span>
+            <button onClick={() => deleteTodo(t.id)}>❌</button>
           </li>
         ))}
       </ul>
